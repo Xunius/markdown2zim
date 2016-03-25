@@ -1154,8 +1154,6 @@ def saveFile(abpath_out,text,verbose=True):
 def main(filein,fileout,verbose=True):
 
     text=readFile(filein,verbose)
-    import pdb
-    pdb.set_trace()
     if verbose:
         print('# <markdown2zim>: Converting to zim...')
     newtext=Markdown2Zim().convert(text)

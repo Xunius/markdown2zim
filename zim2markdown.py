@@ -679,7 +679,6 @@ class Zim2Markdown(object):
     _last_li_endswith_two_eols = False
 
     def _list_item_sub(self, match):
-        import pdb; pdb.set_trace()
         item = match.group(4)
         leading_line = match.group(1)
         if leading_line or "\n\n" in item or self._last_li_endswith_two_eols:
@@ -1146,7 +1145,7 @@ if __name__=='__main__':
     
     FILEIN=os.path.abspath(args.file)
     if not args.out:
-        FILEOUT='%s_%s.txt' %(os.path.splitext(args.file)[0], 'zim2md')
+        FILEOUT='%s_%s.md' %(os.path.splitext(args.file)[0], 'zim2md')
     else:
         FILEOUT=args.out
     FILEOUT=os.path.abspath(FILEOUT)
