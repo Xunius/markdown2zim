@@ -48,8 +48,8 @@ Convert a text file written in **markdown** or **zim wiki** to the other.
 
 
 
-Links in **zim** are translated to file paths, e.g. [[+linktonote]] is converted
-to [linktonote](~/path_to_current_file/title_of_current_note/linktonote.txt)
+Links in **zim** are translated to file paths, e.g. `[[+linktonote]]` is converted
+to `[linktonote](~/path_to_current_file/title_of_current_note/linktonote.txt)`
 
 Similary image links are converted to file paths.
 
