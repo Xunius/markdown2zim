@@ -52,6 +52,7 @@ Update time: 2016-03-21 21:17:19.
 import re
 import sys,os
 import argparse
+from lib import tools
 try:
     from hashlib import md5
 except ImportError:
@@ -1105,59 +1106,17 @@ def _dedentlines(lines, tabsize=8, skip_first_line=False):
 
 
 
-#-------------------Read in text file and store data-------------------
-def readFile(abpath_in,verbose=True):
-    '''Read in text file and store data
-
-    <abpath_in>: str, absolute path to input txt.
-    '''
-
-    if not os.path.exists(abpath_in):
-        raise Exception("\n# <markdown2zim>: Input file not found.")
-
-    if verbose:
-        print('\n# <markdown2zim>: Open input file:')
-        print(abpath_in)
-        print('\n# <markdown2zim>: Reading lines...')
-        
-    lines=[]
-
-    with open(abpath_in, 'r') as fin:
-        for line in fin:
-            lines.append(line)
-    lines=u''.join(lines)
-
-    if verbose:
-        print('# <markdown2zim>: Got all data.')
-
-    return lines
-
-#---------------Save result to file---------------
-def saveFile(abpath_out,text,verbose=True):
-
-    if os.path.isfile(abpath_out):
-        os.remove(abpath_out)
-
-    if verbose:
-        print('\n# <markdown2zim>: Saving result to:')
-        print(abpath_out)
-
-    with open(abpath_out, mode='a') as fout:
-        fout.write(text)
-
-    return
-        
         
 
 
 
 def main(filein,fileout,verbose=True):
 
-    text=readFile(filein,verbose)
+    text=tools.readFile(filein,verbose)
     if verbose:
         print('# <markdown2zim>: Converting to zim...')
     newtext=Markdown2Zim().convert(text)
-    saveFile(fileout,newtext,verbose)
+    tools.saveFile(fileout,newtext,verbose)
 
     return
 
