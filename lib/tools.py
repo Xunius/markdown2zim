@@ -29,6 +29,8 @@ def readFile(abpath_in,verbose=True):
     <abpath_in>: str, absolute path to input txt.
     '''
 
+    abpath_in=expandUser(abpath_in)
+
     if not os.path.exists(abpath_in):
         raise Exception("\n# <readFile>: Input file not found.")
 
@@ -57,10 +59,7 @@ def autoRename(abpath):
 
     <abpath>: str, absolute path to a folder or a file to rename.
     
-    Return <newname>: str, new file path.
-    If no conflict found, return <abpath>;
-    If conflict with existing file, return renamed file path,
-    by appending "_(n)".
+    Return <newname>: str, renamed file path, by appending "_(n)".
     E.g. 
         n1='~/codes/tools/send2ever.py'
         n2='~/codes/tools/send2ever_(4).py'
@@ -69,14 +68,14 @@ def autoRename(abpath):
         n2='~/codes/tools/send2ever_(5).py'
     '''
 
+    if not os.path.exists(abpath):
+        return expandUser(abpath)
+
     def rename_sub(match):
         base=match.group(1)
         delim=match.group(2)
         num=int(match.group(3))
         return '%s%s(%d)' %(base,delim,num+1)
-
-    if not os.path.exists(abpath):
-        return abpath
 
     folder,filename=os.path.split(abpath)
     basename,ext=os.path.splitext(filename)
@@ -94,6 +93,8 @@ def autoRename(abpath):
         newname='%s_(1)%s' %(basename,ext)
 
     newname=os.path.join(folder,newname)
+    newname=expandUser(newname)
+
     return newname
 
 
@@ -101,6 +102,7 @@ def autoRename(abpath):
 #---------------Save result to file---------------
 def saveFile(abpath_out,text,overwrite=True,verbose=True):
 
+    abpath_out=expandUser(abpath_out)
     if os.path.isfile(abpath_out):
         if overwrite:
             os.remove(abpath_out)
@@ -118,3 +120,18 @@ def saveFile(abpath_out,text,overwrite=True,verbose=True):
         
 
         
+
+#------------------Expand user home "~" in file names------------------
+def expandUser(path,verbose=True):
+    '''Expand user home "~" in file names
+
+    '''
+    if type(path) is list or type(path) is tuple:
+        filelist=[os.path.expanduser(ii) for ii in path]
+        return filelist
+
+    elif type(path) is str:
+        return os.path.expanduser(path)
+
+
+
