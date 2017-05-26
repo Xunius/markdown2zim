@@ -1,3 +1,6 @@
+#!/usr/bin/python2
+# -*- coding: utf-8 -*-
+
 """Convert markdown to zim wiki syntax.
 
 Stripped and modified from markdown2.py
@@ -902,8 +905,16 @@ class Markdown2Zim(object):
     def _do_italics_and_bold(self, text):
         # <strong> must go first:
         ########## syntax: italic and bold ##############
-        text = self._strong_re.sub(r"**\2**", text)
+        self._escape_table['**']=_hash_text('**')
+        ast_hash=self._escape_table['**']
+        #text = self._strong_re.sub(r"**\2**", text)
+
+        # replace ** with a hash
+        text = self._strong_re.sub(r"%s\2%s" %(ast_hash, ast_hash), text)
+        # do italic
         text = self._em_re.sub(r"//\2//", text)
+        # replace hash with **
+        text=text.replace(ast_hash,'**')
         ########## syntax: italic and bold END ##############
         return text
 
