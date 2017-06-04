@@ -160,9 +160,11 @@ class Markdown2Zim(object):
 
         text = self._strip_link_definitions(text)
 
+        #text = self._strip_img_definitions(text)
+
         text = self._run_block_gamut(text)
 
-        #text = self._add_footnotes(text)
+        text = self._add_footnotes(text)
 
         text += "\n"
 
@@ -222,6 +224,33 @@ class Markdown2Zim(object):
             (?:\n+|\Z)
             """ % less_than_tab, re.X | re.M | re.U)
         return _link_def_re.sub(self._extract_link_def_sub, text)
+
+
+    def _strip_img_definitions(self, text):
+        # Strips img definitions from text, stores the URLs and titles in
+        # hash references.
+
+        # Link defs are in the form:
+        #   ![id]: url "optional title"
+        _link_def_re = re.compile(r"""
+            ![ ]*\[(.*?)\]     # id = \1
+              [ \t]*
+            \((.+?)\)           # url = \2
+              [ \t]*
+            (?:\n+|\Z)
+            """, re.X | re.M | re.U | re.S)
+        return _link_def_re.sub(self._extract_img_def_sub, text)
+
+    def _extract_img_def_sub(self, match):
+        id, url = match.groups()
+        key = id.lower()    # Link IDs are case-insensitive
+        if key=='':
+            key=str(len(self.urls))
+
+        self.urls[key] = self._encode_amps_and_angles(url)
+        #if title:
+            #self.titles[key] = title
+        return ""
 
     # Ampersand-encoding based entirely on Nat Irons's Amputator MT plugin:
     #   http://bumppo.net/projects/amputator/
@@ -345,7 +374,31 @@ class Markdown2Zim(object):
 
         text = self._do_italics_and_bold(text)
 
+        # replace hased symbols like * back to original
+        text = self._fill_hased(text)
+
+        # remove some weird unicode chars like '\ufeff'
+        text = self._remove_weird(text)
+
         return text
+
+    def _fill_hased(self,text):
+        invertdict=dict(zip(self._escape_table.values(),
+            self._escape_table.keys()))
+        for kk,vv in invertdict.items():
+            text=text.replace(kk,vv)
+        return text
+
+    
+    _weird_uni_table={u'\ufeff': ''}
+    def _remove_weird(self,text):
+        for kk,vv in self._weird_uni_table.items():
+            text=text.replace(kk,vv)
+        return text
+
+
+
+
 
 
 
