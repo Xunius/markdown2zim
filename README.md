@@ -82,6 +82,9 @@ python zim2markdown.py input [-o output]
 where `-o output` is the output file, default to "input_md2zim.txt" or "input_zim2md.md"
 
 
+# Related project
+
+[evernote2zim](https://github.com/Xunius/evernote2zim): facilitate migration from Evernote to Zimwiki
 
 
 
