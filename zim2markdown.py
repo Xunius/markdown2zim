@@ -547,7 +547,11 @@ class Zim2Markdown(object):
                     link_re=re.compile('(:|\\+|\\b)(.+)',re.X | re.M)
 
                 m1=link_re.match(link_text)
-                url,link=m1.groups()
+                if m1 == None:
+                    url = ""
+                    link = link_text
+                else:
+                    url,link=m1.groups()
 
                 ########## syntax: link ##############
                 result_head = '[%s]' % link
