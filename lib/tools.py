@@ -1,24 +1,22 @@
 '''
 Utility functions.
 
-Update time: 2016-03-24 11:11:46.
+Update time: 2019-09-27 19:59:00.
 '''
+from __future__ import print_function
+from __future__ import unicode_literals
 import os
 import re
 
 
 
 def deu(text):
-    if isinstance(text,str):
-        return text.decode('utf8','replace')
-    else:
-        return text
+    # TODO: delete, deprecated with Python > 3
+    return text
 
 def enu(text):
-    if isinstance(text,unicode):
-        return text.encode('utf8','replace')
-    else:
-        return text
+    # TODO: delete, deprecated with Python > 3
+    return text
 
 
 

@@ -44,10 +44,17 @@ Syntax not supported:
     - tables
                      
 
-Update time: 2016-03-21 21:17:19.
+Update time: 2019-09-27 19:59:00.
 """
+from __future__ import print_function
+from __future__ import unicode_literals
 
 
+from builtins import bytes
+from builtins import str
+from builtins import range
+from past.builtins import basestring
+from builtins import object
 import re
 import sys,os
 import argparse
@@ -68,7 +75,6 @@ if sys.version_info[0] <= 2:
     base_string_type = basestring
 elif sys.version_info[0] >= 3:
     py3 = True
-    unicode = str
     base_string_type = str
 
 
@@ -178,9 +184,6 @@ class Zim2Markdown(object):
         # one article (e.g. an index page that shows the N most recent
         # articles):
         self.reset()
-
-        if not isinstance(text, unicode):
-            text = unicode(text, 'utf-8')
 
         # Standardize line endings:
         text = re.sub("\r\n|\r", "\n", text)
