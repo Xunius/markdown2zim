@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import unicode_literals
 import zim2markdown
 
 text="""
@@ -47,6 +49,6 @@ code block continues.
 
 out2=zim2markdown.Zim2Markdown().convert(text)
 
-print text
-print '\n'
-print out2
+print(text)
+print('\n')
+print(out2)
