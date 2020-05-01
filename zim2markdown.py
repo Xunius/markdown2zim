@@ -29,10 +29,10 @@ Syntax converted:
                      texts...           texts...
                      ```                ```
     ----------------------------------------------------
-    inline link      [link](url)        [[url|link]]
+    inline link      [text](url)        [[url|text]]
     ----------------------------------------------------
-    ref link         [link text](url)    
-                                        [[url|link]]
+    ref link         [text](url)
+                                        [[url|text]]
     ----------------------------------------------------
     image            ![img](url)        {{url}}
     ----------------------------------------------------
@@ -42,7 +42,7 @@ Syntax converted:
 Syntax not supported:
     - footnote
     - tables
-                     
+
 
 Update time: 2019-09-27 19:59:00.
 """
@@ -111,7 +111,10 @@ def findBaseDir(curdir):
 def parseLink(link_text, dec, file_path):
 
     if file_path is None:
-        return '%s%s' %(dec, link_text)
+        if dec in [':', '+', '']:
+            return '%s%s' %(dec, link_text)
+        else:
+            return dec
 
     file_path=_home_re.sub(_home_re_sub,file_path)
     curdir, curfile=os.path.split(file_path)
@@ -130,7 +133,11 @@ def parseLink(link_text, dec, file_path):
                 return link_text
 
     elif dec==':':
-        basedir=findBaseDir(curdir)
+        try:
+            basedir=findBaseDir(curdir)
+        except:
+            return '%s%s' %(dec,link_text)
+
         result=os.path.join(basedir,link_file)
         if os.path.exists(result):
             return result
@@ -144,6 +151,9 @@ def parseLink(link_text, dec, file_path):
             return result
         else:
             return '%s%s' %(dec,link_text)
+
+    else:
+        return dec
 
 
 
@@ -1074,8 +1084,8 @@ def _dedentlines(lines, tabsize=8, skip_first_line=False):
 
 
 
-        
-        
+
+
 
 
 
@@ -1109,7 +1119,7 @@ if __name__=='__main__':
         args=parser.parse_args()
     except:
         sys.exit(1)
-    
+
     FILEIN=os.path.abspath(args.file)
     if not args.out:
         FILEOUT='%s_%s.md' %(os.path.splitext(args.file)[0], 'zim2md')
@@ -1119,4 +1129,4 @@ if __name__=='__main__':
 
     main(FILEIN,FILEOUT,args.verbose)
 
-    
+

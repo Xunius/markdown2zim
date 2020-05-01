@@ -32,21 +32,21 @@ Syntax converted:
                      texts...           texts...
                      ```                ```
     ----------------------------------------------------
-    inline link      [link](url)        [[url|link]]
+    inline link      [text](url)        [[url|text]]
     ----------------------------------------------------
-    ref link         [link text][id]    
-                     [id]:url "title"   [[url|link]]
+    ref link         [text][id]
+                     [id]:url "title"   [[url|text]]
     ----------------------------------------------------
     inline image     ![img](url)        {{url}}
     ----------------------------------------------------
-    ref image        ![img text][id]    
+    ref image        ![img text][id]
                      [id]:url "title"   {{url}}
 
 
 Syntax not supported:
     - footnote
     - tables
-                     
+
 
 Update time: 2019-09-27 19:59:00.
 """
@@ -393,7 +393,7 @@ class Markdown2Zim(object):
             text=text.replace(kk,vv)
         return text
 
-    
+
     _weird_uni_table={u'\ufeff': ''}
     def _remove_weird(self,text):
         for kk,vv in self._weird_uni_table.items():
@@ -1174,7 +1174,7 @@ def _dedentlines(lines, tabsize=8, skip_first_line=False):
 
 
 
-        
+
 
 
 
@@ -1208,7 +1208,7 @@ if __name__=='__main__':
         args=parser.parse_args()
     except:
         sys.exit(1)
-    
+
     FILEIN=os.path.abspath(args.file)
     if not args.out:
         FILEOUT='%s_%s.txt' %(os.path.splitext(args.file)[0], 'md2zim')

@@ -36,6 +36,7 @@ quote block continues again.
 [[linka]]
 [[:linkb]]
 [[+linkc]]
+[[+linkc|link title]]
 [[http:shitshit.com|linkd]]
 {{hppt:toimagesite.com}}
 {{http:urltoimage.com}}
