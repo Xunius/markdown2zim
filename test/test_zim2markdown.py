@@ -38,7 +38,7 @@ quote block continues again.
 [[+linkc]]
 [[+linkc|link title]]
 [[http:shitshit.com|linkd]]
-{{hppt:toimagesite.com}}
+{{https:toimagesite.com}}
 {{http:urltoimage.com}}
 
 ```

@@ -22,15 +22,15 @@ quote block continues.
 
 [linka](http:shitshit.com)
 [linkb][10]
-![image1](hppt:toimagesite.com)
+![image1](http:toimagesite.com)
 ![image2][11]
 
 > this is a quote block,
 still a quote block,
 quote block continues.
 
-[10]:http:shitshit.com  "this is shit site"
-[11]:http:urltoimage.com  "this is shit site"
+[10]:https:shitshit.com  "this is shit site"
+[11]:https:urltoimage.com  "this is shit site"
 [^foot]:here is a footnote.
 
 
